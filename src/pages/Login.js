@@ -1,12 +1,14 @@
 import React, { useContext } from "react";
 import UserContext from "../UserContext";
 import Register from "./Register";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import '../style/Login.css';
 
 const Login = () => {
 
     const { user, setUser } = useContext(UserContext);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,19 +19,20 @@ const Login = () => {
         const response = await fetch("http://localhost:5000/api/user/login", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body:JSON.stringify({
                 "email": email,
                 "password": password
-            }),
-            mode: 'cors'
+            })           
         });
         const user = await response.json();
         if (user.token) {
             console.log(user.user);
             localStorage.setItem("token", JSON.stringify(user.token));
-            setUser(user.user.name);
+            setUser(user.user);
+            console.log(user);
+            navigate("/");
         } else {
             console.log(user);
             alert(user.message);
@@ -62,8 +65,7 @@ const Login = () => {
                     </form>
                     <Link className="link" to="/register">
                         <button className="submit">Register</button>
-                    </Link>
-                    
+                    </Link>                    
                 </div>
             </div>
         </div>

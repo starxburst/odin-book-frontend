@@ -1,13 +1,11 @@
 import React from "react";
-import { posts } from "../data";
-import Card from "../components/Card";
+import PostWall from "../components/PostWall";
+import '../style/Home.css';
 
 const Home = () => {
     return (
         <div className="home">
-            {posts.map(post => (
-                <Card post={post} key={post.id} />
-                ))}
+            <PostWall/>
         </div>
     )
 }

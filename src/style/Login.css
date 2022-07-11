@@ -98,6 +98,38 @@ input {
     cursor: pointer;
 }
 
+.right .link {
+    width: 50%;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 .loginTitle {
     color: lightgray;
+}
+
+@media (max-width: 768px) {
+    .wrapper {
+        margin-top: 2rem;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+    }
+
+    .left, .right {
+        flex: 0;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .center {
+        display: none;
+    }
+
+    .line {
+        display: none;
+    }
 }

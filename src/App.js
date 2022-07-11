@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Post from './pages/Post';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import PrivateRoutes from "./services/PrivateRoutes";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import UserContext from './UserContext';
 
@@ -17,11 +18,11 @@ function App() {
         <div className="App">
           <Navbar user={user}/>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/login"
-              element={user ? <Navigate to="/" /> : <Login/>} />
-            <Route path="/post/:id" element={user? <Post/> : <Navigate to="/login"/>} />
+          <Route path="/" element={<Home />} />
+            <Route element={<PrivateRoutes/>}>
+              <Route path="/post/:id" element={<Post/>} />
+            </Route>
+            <Route element={<Login/>} path="/login" />
             <Route path="/register" element={user? <Navigate to="/" /> : <Register/>} />
           </Routes>
         </div>
