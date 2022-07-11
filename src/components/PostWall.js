@@ -5,7 +5,7 @@ import CreatePost from "./CreatePost";
 
 const PostWall = () => {
     return (
-        <div>
+        <div className="postWallContainer">
             <CreatePost/>
         </div>
     )

@@ -3,6 +3,7 @@ import UserContext from "../UserContext";
 import Register from "./Register";
 import { Link, useNavigate } from "react-router-dom";
 import '../style/Login.css';
+import toast, { Toaster } from 'react-hot-toast';
 
 const Login = () => {
 
@@ -32,7 +33,11 @@ const Login = () => {
             localStorage.setItem("token", JSON.stringify(user.token));
             setUser(user.user);
             console.log(user);
-            navigate("/");
+            toast.success('Successfully Logged In!')
+            let loginNoti = setInterval(() => {
+                navigate("/");
+            }, 2000);
+            setTimeout(() => { clearInterval(loginNoti) }, 2000);
         } else {
             console.log(user);
             alert(user.message);
@@ -68,6 +73,7 @@ const Login = () => {
                     </Link>                    
                 </div>
             </div>
+            <Toaster />
         </div>
     )
 }

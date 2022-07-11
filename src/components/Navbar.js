@@ -1,14 +1,16 @@
 import React, { useContext, useMemo } from "react";
 import UserContext from "../UserContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import avatarLogo from "../assets/avatar/avatar.png";
 import '../style/Navbar.css';
 
 const Navbar = () => {
     const { user, setUser } = useContext(UserContext);
+    const navigate = useNavigate();
     const logout = () => {
         localStorage.removeItem("token");
         setUser(false);
+        navigate("/login");
     }
 
 
