@@ -17,30 +17,28 @@ const Login = () => {
         console.log(data);
         const email = data.get("email");
         const password = data.get("password");
-        const response = await fetch("http://localhost:5000/api/user/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body:JSON.stringify({
-                "email": email,
-                "password": password
-            })           
-        });
-        const user = await response.json();
-        if (user.token) {
-            console.log(user.user);
-            localStorage.setItem("token", JSON.stringify(user.token));
-            setUser(user.user);
-            console.log(user);
-            toast.success('Successfully Logged In!')
-            let loginNoti = setInterval(() => {
-                navigate("/");
-            }, 2000);
-            setTimeout(() => { clearInterval(loginNoti) }, 2000);
-        } else {
-            console.log(user);
-            alert(user.message);
+        try {
+            const response = await fetch("http://localhost:5000/api/user/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+            const user = await response.json();
+            if (user.token) {
+                localStorage.setItem("token", JSON.stringify(user.token));
+                setUser(user.user);
+                console.log(user);
+                toast.success('Successfully Logged In!')
+                let loginNoti = setInterval(() => {
+                    navigate("/");
+                }, 2000);
+                setTimeout(() => { clearInterval(loginNoti) }, 2000);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Failed to login");
         }
     }
 
