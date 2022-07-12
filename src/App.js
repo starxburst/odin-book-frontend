@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import './App.css';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
-import Post from './pages/Post';
+import Post from './components/PostSection';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import PrivateRoutes from "./services/PrivateRoutes";

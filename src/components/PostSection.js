@@ -1,11 +1,12 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { posts } from "../data";
+import avatarLogo from "../assets/avatar/avatar.png";
+
 import '../style/Post.css';
 
 const Post = () => {
 
-    const location = useLocation();
+    /*const location = useLocation();
     console.log(location);
     const path = location.pathname.split("/")[2];
     const post = posts.find(post => post.id.toString() === path);
@@ -16,7 +17,15 @@ const Post = () => {
             <p className="postDesc">{post.desc}</p>
             <p className="postLongDesc">{post.longDesc}</p>
         </div>
+    )*/
+
+    return (
+        <div className="postContainer">
+            <img src={avatarLogo} alt="" className="postAvatar"/>
+        </div>
     )
+
+    
 }
 
 export default Post;

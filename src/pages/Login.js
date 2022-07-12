@@ -25,6 +25,12 @@ const Login = () => {
                 },
                 body: JSON.stringify({ email, password })
             });
+                if (!response.ok) {
+                    const text = await response.text();
+                    toast.error(text);
+                    return;
+                };
+            
             const user = await response.json();
             if (user.token) {
                 localStorage.setItem("token", JSON.stringify(user.token));
@@ -37,8 +43,8 @@ const Login = () => {
                 setTimeout(() => { clearInterval(loginNoti) }, 2000);
             }
         } catch (error) {
-            console.log(error);
-            toast.error("Failed to login");
+            console.log(user);
+            toast.error("Something went wrong");
         }
     }
 
