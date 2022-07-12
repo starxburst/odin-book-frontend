@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import avatarLogo from "../assets/avatar/avatar.png";
+import toast, { Toaster } from 'react-hot-toast';
+import Post from "./Post";
+import '../style/PostSection.css';
 
-import '../style/Post.css';
-
-const Post = () => {
+const PostSection = ({posts}) => {
 
     /*const location = useLocation();
     console.log(location);
@@ -20,12 +21,13 @@ const Post = () => {
     )*/
 
     return (
-        <div className="postContainer">
-            <img src={avatarLogo} alt="" className="postAvatar"/>
+        <div className="postSectionContainer">
+            <Post posts={posts} />
+            <Toaster />
         </div>
     )
 
     
 }
 
-export default Post;
+export default PostSection;

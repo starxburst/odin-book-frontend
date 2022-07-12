@@ -4,7 +4,7 @@ import '../style/CreatePost.css';
 import avatarLogo from "../assets/avatar/avatar.png";
 import toast, { Toaster } from 'react-hot-toast';
 
-const CreatePost = () => {
+const CreatePost = ({getAllPosts}) => {
 
     const handlePostCreate = async (e) => {
         e.preventDefault();
@@ -29,6 +29,8 @@ const CreatePost = () => {
                 const post = await response.json();
                 toast.success('Successfully Created Post!');
                 console.log(post);
+                getAllPosts();
+                e.target.reset();
             }
         } catch (error) {
             console.log(error);
