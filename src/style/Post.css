@@ -5,6 +5,29 @@
     margin-bottom: 1rem;
 }
 
+.postWrapper {
+    padding: 1.5rem 0 0 1rem;
+}
+
+.postHeaderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+
+.postHeaderName {
+    display: flex;
+    font-weight: bold;
+}
+
+.postHeaderDate {
+    display: flex;
+    font-size: small;
+}
+
 .postContent {
+    display: flex;
     overflow-wrap: break-word;
+    padding: 1rem 0 1rem 1rem;
 }

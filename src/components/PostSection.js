@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import Post from "./Post";
 import '../style/PostSection.css';
 
-const PostSection = ({posts}) => {
+const PostSection = ({posts, getAllPosts}) => {
 
     /*const location = useLocation();
     console.log(location);
@@ -22,7 +22,7 @@ const PostSection = ({posts}) => {
 
     return (
         <div className="postSectionContainer">
-            <Post posts={posts} />
+            <Post posts={posts} getAllPosts={getAllPosts} />
             <Toaster />
         </div>
     )

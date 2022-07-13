@@ -1,0 +1,42 @@
+.createCommentContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 1rem;
+    width: 100%;
+}
+
+.commentForm {
+    display: flex;
+    flex-direction: row;
+    margin-left: 1rem;
+    width: 100%;
+}
+
+.commentInput {
+    background-color: #333434;
+    border: none;
+    color: white;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    height: 1rem;
+    width: 100%;
+    font-size: medium;
+}
+
+.commentInput:focus {
+    outline: none;
+}
+
+.commentButton {
+    background-color: #333434;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 2rem;
+    align-self: center;
+    margin-right: 20px;
+}

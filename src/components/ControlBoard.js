@@ -13,6 +13,7 @@ const ControlBoard = () => {
                     <img src={avatarLogo} alt="" className="avatar"></img>
                     <div className="controlBoardName">{user.name}</div>
                 </div>
+                <div className="controlBoardItem"> {user.email}</div>
             </div>
         </div>
     )

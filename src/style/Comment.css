@@ -1,0 +1,45 @@
+.commentContainer {
+    background-color: #202122;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.commentHr {
+    border: solid 1px #18191a;
+}
+
+.commentWrapper {
+    padding: 0.5rem 0 0 1rem;
+}
+
+.commentHeaderContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+
+.commentAvatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.commentHeaderName {
+    display: flex;
+    font-weight: bold;
+    margin-left: 0.5rem;
+}
+
+.commentHeaderDate {
+    display: flex;
+    font-size: small;
+    margin-left: 0.5rem;
+}
+
+.commentContent {
+    display: flex;
+    overflow-wrap: break-word;
+    padding: 1rem 0 0 1rem;
+}
