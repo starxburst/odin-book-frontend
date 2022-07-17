@@ -6,9 +6,12 @@ import PostSection from "./PostSection";
 import toast, { Toaster } from 'react-hot-toast';
 import { Buffer } from 'buffer';
 import avatarLogo from "../assets/avatar/avatar.png";
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const PostWall = () => {
     const { user, setUser } = useContext(UserContext);
+    const [isBusy, setBusy] = useState(true);
 
     useEffect(() => {
         getAllPosts();
@@ -18,6 +21,7 @@ const PostWall = () => {
     const [posts, setPosts] = useState([]);
 
     const getAllPosts = async () => {
+        setBusy(true);
         try {
             const response = await fetch("http://localhost:5000/api/posts/", {
             method: "GET",
@@ -35,6 +39,7 @@ const PostWall = () => {
                 setPosts(posts.posts);
                 console.log(posts.posts);
                 console.log(posts);
+                setBusy(false);
             }
         } catch (error) {
             console.log(error);
@@ -72,6 +77,10 @@ const PostWall = () => {
     }
 
     return (
+        isBusy? 
+        <Box sx={{ display: 'flex', width: '60vw', "justify-content": "center" }}>
+            <CircularProgress size={200}/>
+        </Box>:
         <div className="postWallContainer">
             <CreatePost getAllPosts={getAllPosts}/>
             <PostSection posts={posts} getAllPosts={getAllPosts}/>
