@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import UserContext from "../UserContext";
 import '../style/CreatePost.css';
 import avatarLogo from "../assets/avatar/avatar.png";
 import toast, { Toaster } from 'react-hot-toast';
 
 const CreatePost = ({getAllPosts}) => {
+
+    const { user } = useContext(UserContext);
 
     const handlePostCreate = async (e) => {
         e.preventDefault();
@@ -41,14 +43,14 @@ const CreatePost = ({getAllPosts}) => {
 
     return (
         <div className="createPostContainer">
-            <img src={avatarLogo} alt="" className="postAvatar"/>
+            <img src={user.avatar} alt="" className="postAvatar"/>
             <div className="postFormContainer">
                 <form onSubmit={(e) => handlePostCreate(e)} className="postForm">
                     <input name="content"  className="postInput" type="text" placeholder="What's on your mind?"/>
                     <button className="postButton">Post</button>
                 </form>
             </div>
-            <Toaster />
+            <Toaster/>
         </div>
     )
 }

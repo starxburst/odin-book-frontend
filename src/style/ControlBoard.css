@@ -28,6 +28,10 @@
     margin-left: 1rem;
 }
 
+.link {
+    text-decoration: none;
+}
+
 @media (max-width: 768px) {
     .controlBoardContainer {
         display: none  ;

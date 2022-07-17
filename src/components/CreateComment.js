@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
+import UserContext from "../UserContext";
 import '../style/CreateComment.css';
 import avatarLogo from '../assets/avatar/avatar.png';
 import toast, { Toaster } from 'react-hot-toast';
 
 const CreateComment = ({ postId, getAllPosts }) => {
 
+    const { user, setUser } = useContext(UserContext);
 
     const handleCommentCreate = async (e) => {
         e.preventDefault();
@@ -45,7 +47,7 @@ const CreateComment = ({ postId, getAllPosts }) => {
 
     return (
         <div className="createCommentContainer">
-            <img src={avatarLogo} alt="" className="commentAvatar"/>
+            <img src={user.avatar} alt="" className="commentAvatar"/>
             <div className="postCommentContainer">
                 <form onSubmit={(e) => handleCommentCreate(e)} id={postId} className="commentForm">
                     <input name="comment" type="text" className="commentInput" placeholder="Write a comment..." />

@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import Post from './components/PostSection';
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Profile from "./pages/Profile";
 import PrivateRoutes from "./services/PrivateRoutes";
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import UserContext from './UserContext';
@@ -22,6 +23,7 @@ function App() {
             <Route element={<PrivateRoutes/>}>
               
               <Route path="/post/:id" element={<Post/>} />
+              <Route path="/profile" element={<Profile/>} />
             </Route>
             <Route element={<Login/>} path="/login" />
             <Route path="/register" element={user? <Navigate to="/" /> : <Register/>} />
