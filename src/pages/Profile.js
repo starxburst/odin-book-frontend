@@ -84,7 +84,9 @@ const Profile = () => {
                     console.log(data.user);
                     setFetchedUserinfo(data.user);
 
-                    const isRequestedResult = user.friendRequests.includes(data.user._id)
+                    console.log(user.friendRequests);
+                    const isRequestedResult = user.friendRequests.includes(data.user._id);
+                    console.log(isRequestedResult);
 
                     setUser({ ...user, isRequested: isRequestedResult });
                     console.log(user);
@@ -93,6 +95,30 @@ const Profile = () => {
                 console.log(error);
                 toast.error("Something went wrong");
             }
+        }
+    }
+
+    //Refresh user info
+    const refreshUserInfo = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/me`, {
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token"))
+                }
+            });
+            if (!response.ok) {
+                const text = await response.text();
+                console.log(text);
+                toast.error("Something went wrong");
+                return;
+            } else {
+                const data = await response.json();
+                setUser(data.user);
+                console.log(data.user);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
         }
     }
 
@@ -171,6 +197,7 @@ const Profile = () => {
                 const data = await response.json();
                 console.log(data);
                 toast.success("Friend request accepted!");
+                refreshUserInfo();
                 getUserInfo();
             }
         } catch (error) {
@@ -196,6 +223,7 @@ const Profile = () => {
                 const data = await response.json();
                 console.log(data);
                 toast.success("Friend request rejected!");
+                refreshUserInfo();
                 getUserInfo();
             }
         } catch (error) {
@@ -221,6 +249,7 @@ const Profile = () => {
                 const data = await response.json();
                 console.log(data);
                 toast.success("Friend removed!");
+                refreshUserInfo();
                 getUserInfo();
             }
         } catch (error) {

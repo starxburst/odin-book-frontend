@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import UserContext from "../UserContext";
 import Register from "./Register";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +10,38 @@ const Login = () => {
     const { user, setUser } = useContext(UserContext);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) {
+            navigate("/");
+        } else if (JSON.parse(localStorage.getItem("token"))) {
+            autoLogin();
+        }
+    }, []);
+
+    const autoLogin = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/me`, {
+                headers: {
+                    "auth-token": JSON.parse(localStorage.getItem("token"))
+                }
+            });
+            if (!response.ok) {
+                const text = await response.text();
+                console.log(text);
+                toast.error("Something went wrong");
+                return;
+            } else {
+                const data = await response.json();
+                setUser(data.user);
+                console.log(data.user);
+                navigate("/");
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
+        }
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();

@@ -21,9 +21,8 @@ function App() {
         <div className="App">
           <Navbar user={user}/>
           <Routes>
-          <Route path="/" element={<Home />}/>
             <Route element={<PrivateRoutes/>}>
-              
+              <Route path="/" element={<Home />}/>
               <Route path="/post/:id" element={<Post/>} />
               <Route path="/profile/:id" element={<Profile/>} />
               <Route path="/friends" element={<Friends/>} />
