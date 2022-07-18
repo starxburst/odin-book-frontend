@@ -129,6 +129,106 @@ const Profile = () => {
         }
     }
 
+    const handleSendFriendRequest = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/${fetchedUserinfo._id}/friendrequest`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": JSON.parse(localStorage.getItem("token"))
+                }
+            })
+            if (!response.ok) {
+                const text = await response.text();
+                toast.error(text);
+                return;
+            } else {
+                const data = await response.json();
+                console.log(data);
+                toast.success("Friend request sent!");
+                getUserInfo();
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
+        }
+    }
+
+    const handleAcceptRequest = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/${fetchedUserinfo._id}/acceptfriendrequest`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": JSON.parse(localStorage.getItem("token"))
+                }
+            })
+            if (!response.ok) {
+                const text = await response.text();
+                toast.error(text);
+                return;
+            } else {
+                const data = await response.json();
+                console.log(data);
+                toast.success("Friend request accepted!");
+                getUserInfo();
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
+        }
+    }
+
+    const handleRejectRequest = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/${fetchedUserinfo._id}/rejectfriendrequest`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": JSON.parse(localStorage.getItem("token"))
+                }
+            })
+            if (!response.ok) {
+                const text = await response.text();
+                toast.error(text);
+                return;
+            } else {
+                const data = await response.json();
+                console.log(data);
+                toast.success("Friend request rejected!");
+                getUserInfo();
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
+        }
+    }
+
+    const handleRemoveFriend = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/${fetchedUserinfo._id}/removefriend`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": JSON.parse(localStorage.getItem("token"))
+                }
+            })
+            if (!response.ok) {
+                const text = await response.text();
+                toast.error(text);
+                return;
+            } else {
+                const data = await response.json();
+                console.log(data);
+                toast.success("Friend removed!");
+                getUserInfo();
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
+        }
+    }
+
     return (
         pathId === user._id?
         <div className="profileContainer">
@@ -151,7 +251,7 @@ const Profile = () => {
                     {fetchedUserinfo.isFriend ?
                     <div>
                         <span className="friendStatus">Friend</span>
-                        <button>Remove Friend</button>
+                        <button onClick={handleRemoveFriend}>Remove Friend</button>
                     </div>
                     : fetchedUserinfo.isRequested ?
                     <div>
@@ -159,12 +259,12 @@ const Profile = () => {
                     </div>
                     : user.isRequested ?
                     <div>
-                        <button>Accept Request</button>
-                        <button>Cancel Request</button>
+                        <button onClick={handleAcceptRequest}>Accept</button>
+                        <button onClick={handleRejectRequest}>Reject</button>
                     </div>
                     :
                     <div>
-                        <button>Add Friend</button>
+                        <button onClick={handleSendFriendRequest}>Send Friend Request</button>
                     </div>}
             </div>
             <Toaster/>

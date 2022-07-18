@@ -48,7 +48,9 @@ const Friends = () => {
     let requestsContent = fetchedUserFriendRequests.map(request => {
         return (
             <div>
-                {request.name}
+                <Link to={`/profile/${request._id}`} className="link">
+                    {request.name}
+                </Link>
             </div>
         )
     })
@@ -56,7 +58,9 @@ const Friends = () => {
     let friendsContent = fetchedUserFriends.map(friend => {
         return (
             <div>
-                {friend.name}
+                <Link to={`/profile/${friend._id}`} className="link">
+                    {friend.name}
+                </Link>
             </div>
         )
     })
