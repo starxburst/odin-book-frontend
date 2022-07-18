@@ -15,8 +15,14 @@ const ControlBoard = () => {
                     <img src={user.avatar} alt="" className="avatar"></img>
                     <div className="controlBoardName">{user.name}</div>
                 </div>
-                <Link to="/profile" className="link">
+                <Link to={`/profile/${user._id}`} className="link">
                     <div className="controlBoardItem">Account</div>
+                </Link>
+                <Link to={`/friends`} className="link">
+                    <div className="controlBoardItem">Friends</div>
+                </Link>
+                <Link to={`/search`} className="link">
+                    <div className="controlBoardItem">Search</div>
                 </Link>
             </div>
         </div>

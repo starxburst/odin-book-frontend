@@ -21,9 +21,8 @@ const PostWall = () => {
     const [posts, setPosts] = useState([]);
 
     const getAllPosts = async () => {
-        setBusy(true);
         try {
-            const response = await fetch("http://localhost:5000/api/posts/", {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -50,7 +49,7 @@ const PostWall = () => {
 
     const getUserAvatar = async () => {
         try {
-            const response = await fetch(`http://localhost:5000/api/user/${user._id}/profileImage`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/${user._id}/profileImage`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -78,7 +77,7 @@ const PostWall = () => {
 
     return (
         isBusy? 
-        <Box sx={{ display: 'flex', width: '60vw', "justify-content": "center" }}>
+        <Box sx={{ display: 'flex', width: '60vw', "justify-content": "center", "padding-top": "20vh" }}>
             <CircularProgress size={200}/>
         </Box>:
         <div className="postWallContainer">

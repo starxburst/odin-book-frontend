@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import '../style/Comment.css';
 import moment from "moment";
 import avatarLogo from '../assets/avatar/avatar.png';
@@ -10,9 +11,8 @@ const Comment = ({ comments }) => {
         if (avatar === undefined) {
             return avatarLogo;
         } else {
-            return `data:${avatar.img.contentType};base64, ${Buffer.from(avatar.img.data.data).toString('base64')}`;    }
-        
-
+            return `data:${avatar.img.contentType};base64, ${Buffer.from(avatar.img.data.data).toString('base64')}`;
+        }
     }
 
     let postComment = comments.map(comment => {
@@ -23,7 +23,9 @@ const Comment = ({ comments }) => {
                     <div className="commentHeaderContainer">
                     <img src={renderUserAvatar(comment.user.avatar)} alt="" className="commentAvatar"/>
                         <div>
-                            <div className="commentHeaderName">{comment.user.name}</div>
+                            <Link to={`profile/${comment.user._id}`} className="link">
+                                <div className="commentHeaderName">{comment.user.name}</div>
+                            </Link>
                             <div className="commentHeaderDate">{moment(comment.timestamp).fromNow()}</div>
                         </div>
                     </div>

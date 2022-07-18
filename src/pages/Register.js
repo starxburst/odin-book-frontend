@@ -16,7 +16,7 @@ const Register = () => {
         const email = data.get("email");
         const name = data.get("name");
         const password = data.get("password");
-        const response = await fetch("http://localhost:5000/api/user/register", {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/register`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

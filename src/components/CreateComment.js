@@ -17,7 +17,7 @@ const CreateComment = ({ postId, getAllPosts }) => {
         console.log(id);
 
         try {
-            const response = await fetch(`http://localhost:5000/api/posts/${postId}/comment`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/${postId}/comment`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

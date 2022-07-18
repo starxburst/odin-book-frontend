@@ -13,7 +13,7 @@ const CreatePost = ({getAllPosts}) => {
         const data = new FormData(e.target);
         const content = data.get("content");
         try {
-            const response = await fetch("http://localhost:5000/api/posts/create", {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/create`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
