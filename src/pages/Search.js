@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import toast, { Toaster } from 'react-hot-toast';
 import avatarLogo from "../assets/avatar/avatar.png";
 import { Buffer } from 'buffer';
+import '../style/Search.css';
 
 const Search = () => {
 
@@ -64,7 +65,7 @@ const Search = () => {
                     {searchResult.map((user) => {
                         return (
                             <div className="searchResult">
-                                <Link to={`/profile/${user._id}`} className="link" >
+                                <Link to={`/profile/${user._id}`} className="link searchLinkContainer" >
                                     <img src={renderUserAvatar(user.avatar) } alt="" className="postAvatar"/>
                                     <div className="searchUserName">{user.name}</div>
                                 </Link>

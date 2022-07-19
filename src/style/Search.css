@@ -1,0 +1,53 @@
+.searchUserInput {
+    background-color: #333434;
+    border: none;
+    color: white;
+    margin-right: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    height: 2rem;
+    width: 60vw;
+    font-size: large;
+}
+
+.searchResultContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.searchResult {    
+    background-color: #202122;
+    margin: 1rem 3rem 1rem 3rem;
+    border-radius: 10px;
+}
+
+.searchLinkContainer {
+    padding: 1rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.searchUserName {
+    word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+    .searchResultContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .searchResult {
+        width: 90%;
+        margin: 1rem 0rem 1rem 0rem;
+    }
+
+    .searchLinkContainer {
+        justify-content: left;
+    }
+}

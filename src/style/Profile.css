@@ -1,0 +1,146 @@
+.profilePageContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profileContainer {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #202122;
+    border-radius: 10px;
+    width: 50vw;
+}
+
+.avatarSectionContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.profileAvatar {
+    width: 10vw;
+    height: 10vw;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-top: 1rem;
+    margin-bottom: 20px;
+}
+
+.profileName {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.updateAvatarButton {
+    background-color: #202122;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.updateAvatarButton:hover {
+    background-color: #fff;
+    color: #202122;
+    cursor: pointer;
+}
+
+.sendFriendRequestButton {
+    background-color: #202122;
+    color: white;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.sendFriendRequestButton:hover {
+    background-color: #fff;
+    color: #202122;
+    cursor: pointer;
+}
+
+.acceptRequestButton {
+    background-color: #202122;
+    color: rgba(6, 238, 56, 0.692);
+    border-radius: 10px;
+    border: 1px solid rgba(6, 238, 56, 0.692);
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-right: 1rem;
+}
+
+.acceptRequestButton:hover {
+    background-color: rgba(6, 238, 56, 0.692);
+    color: #202122;
+    cursor: pointer;
+}
+
+.rejectRequestButton {
+    background-color: #202122;
+    color: rgb(197, 36, 24);
+    border-radius: 10px;
+    border: 1px solid rgb(197, 36, 24);
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.rejectRequestButton:hover {
+    background-color: rgb(197, 36, 24);
+    color: #202122;
+    cursor: pointer;
+}
+
+.removeFriendButton {
+    background-color: #202122;
+    color: rgb(197, 36, 24);
+    border-radius: 10px;
+    border: 1px solid rgb(197, 36, 24);
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.removeFriendButton:hover {
+    background-color: rgb(197, 36, 24);
+    color: #202122;
+    cursor: pointer;
+}
+.requestedFriend {
+    background-color: #202122;
+    color: rgb(197, 157, 24);
+    border-radius: 10px;
+    border: 1px solid rgb(197, 157, 24);
+    padding: 0.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+    .profileContainer {
+        width: 90vw;
+    }
+
+    .profileAvatar {
+        width: 50vw;
+        height: 50vw;
+        object-fit: cover;
+        border-radius: 50%;
+        margin-top: 1rem;
+        margin-bottom: 20px;
+    }
+    
+}

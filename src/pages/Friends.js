@@ -16,6 +16,15 @@ const Friends = () => {
         getUserInfo();
     }, []);
 
+    const renderUserAvatar = (avatar) => {
+        if (avatar === undefined) {
+            return avatarLogo;
+        } else {
+            return `data:${avatar.img.contentType};base64, ${Buffer.from(avatar.img.data.data).toString('base64')}`;
+        }
+    }
+
+
      //get user info
      const getUserInfo = async () => {
 
@@ -47,9 +56,10 @@ const Friends = () => {
 
     let requestsContent = fetchedUserFriendRequests.map(request => {
         return (
-            <div>
-                <Link to={`/profile/${request._id}`} className="link">
-                    {request.name}
+            <div className="requestContentContainer">
+                <Link to={`/profile/${request._id}`} className="link requestLinkContainer">
+                    <img src={renderUserAvatar(request.avatar)} alt="user avatar" className="postAvatar" />
+                    <div className="requestUserName" >{request.name}</div>
                 </Link>
             </div>
         )
@@ -57,33 +67,36 @@ const Friends = () => {
 
     let friendsContent = fetchedUserFriends.map(friend => {
         return (
-            <div>
-                <Link to={`/profile/${friend._id}`} className="link">
-                    {friend.name}
+            <div className="friendContentContainer">
+                <Link to={`/profile/${friend._id}`} className="link friendLinkContainer">
+                    <img src={renderUserAvatar(friend.avatar)} alt="user avatar" className="postAvatar" />
+                    <div className="friendUserName" >{friend.name}</div>
                 </Link>
             </div>
         )
     })
-
-    const renderUserAvatar = (avatar) => {
-        if (avatar === undefined) {
-            return avatarLogo;
-        } else {
-            return `data:${avatar.img.contentType};base64, ${Buffer.from(avatar.img.data.data).toString('base64')}`;
-        }
-    }
-
 
     return (
         <div className="friendsPageContainer">
             <div>
                 <h1>Friends Requests</h1>
                 <div className="friendsRequestContainer">
-                    {requestsContent}
+                    { fetchedUserFriendRequests.length === 0 ? (
+                        <div>
+                            <p>No friend request yet...</p>
+                        </div>
+                        ) : requestsContent
+                    }
                 </div>
                 <h1>Friends</h1>
                 <div className="friendsContainer">
-                    {friendsContent}
+                    { 
+                        fetchedUserFriends.length === 0 ? (
+                            <div>
+                                <p>No friends yet...</p>
+                            </div>
+                            ) : friendsContent
+                    }
                 </div>
             </div>
         </div>

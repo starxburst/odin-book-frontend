@@ -1,0 +1,83 @@
+.friendsRequestContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.requestContentContainer {
+    background-color: #202122;
+    margin: 1rem 3rem 1rem 3rem;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.requestLinkContainer {
+    padding: 1rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.requestUserName {
+    word-wrap: break-word;
+}
+
+.friendsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.friendContentContainer {
+    background-color: #202122;
+    margin: 1rem 3rem 1rem 3rem;
+    border-radius: 10px;
+    width: fit-content;
+}
+
+.friendLinkContainer {
+    padding: 1rem 1rem 1rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.friendUserName {
+    word-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+    .friendsRequestContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .friendsContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .requestContentContainer {
+        width: 90%;
+        margin: 1rem 0rem 1rem 0rem;
+    }
+
+    .friendContentContainer {
+        width: 90%;
+        margin: 1rem 0rem 1rem 0rem;
+    }
+
+    .requestLinkContainer {
+        justify-content: left;
+    }
+
+    .friendLinkContainer {
+        justify-content: left;
+    }
+}

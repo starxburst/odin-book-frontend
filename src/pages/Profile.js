@@ -83,13 +83,15 @@ const Profile = () => {
                     data.user.isRequested = data.user.friendRequests.some(request => request._id === user._id);
                     console.log(data.user);
                     setFetchedUserinfo(data.user);
-
-                    console.log(user.friendRequests);
-                    const isRequestedResult = user.friendRequests.includes(data.user._id);
+                    const loggedInUser = await refreshUserInfo();
+                    console.log(loggedInUser);
+                    console.log(loggedInUser.friendRequests);
+                    const isRequestedResult = loggedInUser.friendRequests.includes(pathId);
                     console.log(isRequestedResult);
 
-                    setUser({ ...user, isRequested: isRequestedResult });
+                    setUser({ ...loggedInUser, isRequested: isRequestedResult });
                     console.log(user);
+                    return;
                 }
             } catch (error) {
                 console.log(error);
@@ -98,7 +100,7 @@ const Profile = () => {
         }
     }
 
-    //Refresh user info
+    //GetRefresh user info
     const refreshUserInfo = async () => {
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/me`, {
@@ -113,8 +115,10 @@ const Profile = () => {
                 return;
             } else {
                 const data = await response.json();
-                setUser(data.user);
+                const avatar = renderUserAvatar(data.user.avatar);
+                data.user.avatar = avatar;
                 console.log(data.user);
+                return data.user;
             }
         } catch (error) {
             console.log(error);
@@ -260,41 +264,47 @@ const Profile = () => {
 
     return (
         pathId === user._id?
-        <div className="profileContainer">
-            <div className="avatarSectionContainer">
-                <img src={user.avatar} alt="" className="avatar"></img>
-                <span>{user.name}</span>
-                <form onSubmit={(e) => handleAvatarSubmit(e)} className="avatarForm">
-                    <input onChange={(e) => onInputChange(e)} type="file" name="imageFile" id="imageFile" />
-                    <button className="avatarButton">Change Avatar</button>
-                </form>
+        <div className="profilePageContainer">
+            <div>
+                <div className="profileContainer">
+                    <div className="avatarSectionContainer">
+                        <img src={user.avatar} alt="" className="profileAvatar"></img>
+                        <span className="profileName">{user.name}</span>
+                        <form onSubmit={(e) => handleAvatarSubmit(e)} className="avatarForm">
+                            <input onChange={(e) => onInputChange(e)} type="file" name="imageFile" id="imageFile" />
+                            <button className="updateAvatarButton">Update Avatar</button>
+                        </form>
+                    </div>                    
+                </div>
             </div>
             <Toaster/>
         </div>:
 
         // render other user profile page
-        <div className="profileContainer">
-            <div className="avatarSectionContainer">
-                <img src={fetchedUserinfo.avatar} alt="" className="avatar"></img>
-                <span>{fetchedUserinfo.name}</span>
-                    {fetchedUserinfo.isFriend ?
-                    <div>
-                        <span className="friendStatus">Friend</span>
-                        <button onClick={handleRemoveFriend}>Remove Friend</button>
-                    </div>
-                    : fetchedUserinfo.isRequested ?
-                    <div>
-                        <span className="friendStatus">Requested</span>
-                    </div>
-                    : user.isRequested ?
-                    <div>
-                        <button onClick={handleAcceptRequest}>Accept</button>
-                        <button onClick={handleRejectRequest}>Reject</button>
-                    </div>
-                    :
-                    <div>
-                        <button onClick={handleSendFriendRequest}>Send Friend Request</button>
-                    </div>}
+        <div className="profilePageContainer">
+            <div className="profileContainer">
+                <div className="avatarSectionContainer">
+                    <img src={fetchedUserinfo.avatar} alt="" className="profileAvatar"></img>
+                    <span>{fetchedUserinfo.name}</span>
+                        {fetchedUserinfo.isFriend ?
+                        <div>
+                            <span className="friendStatus"></span>
+                            <button className="removeFriendButton" onClick={handleRemoveFriend}>Remove Friend</button>
+                        </div>
+                        : fetchedUserinfo.isRequested ?
+                        <div>
+                            <div className="requestedFriend">Requested, waiting for response...</div>
+                        </div>
+                        : user.isRequested ?
+                        <div>
+                            <button className="acceptRequestButton" onClick={handleAcceptRequest}>Accept</button>
+                            <button className="rejectRequestButton" onClick={handleRejectRequest}>Reject</button>
+                        </div>
+                        :
+                        <div>
+                            <button className="sendFriendRequestButton" onClick={handleSendFriendRequest}>Send Friend Request</button>
+                        </div>}
+                </div>                
             </div>
             <Toaster/>
         </div>
