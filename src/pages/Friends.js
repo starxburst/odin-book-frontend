@@ -83,7 +83,7 @@ const Friends = () => {
                 <div className="friendsRequestContainer">
                     { fetchedUserFriendRequests.length === 0 ? (
                         <div>
-                            <p>No friend request yet...</p>
+                            <p>No pending friend request yet...</p>
                         </div>
                         ) : requestsContent
                     }

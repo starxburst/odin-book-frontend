@@ -28,8 +28,22 @@
     margin-left: 1rem;
 }
 
+.controlBoardItemContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
 .link {
     text-decoration: none;
+}
+
+.controlBoardLogo {
+    width: 2rem;    
+    flex-shrink: 0;
+    align-self: center;
 }
 
 @media (max-width: 768px) {
