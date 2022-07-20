@@ -19,15 +19,15 @@ const ControlBoard = () => {
                     <div className="controlBoardName">{user.name}</div>
                 </div>
                 <Link to={`/profile/${user._id}`} className="link controlBoardItemContainer">
-                    <img src={settingLogo} className="controlBoardLogo"/>
+                    <img src={settingLogo} alt="" className="controlBoardLogo"/>
                     <div className="controlBoardItem">Account</div>
                 </Link>
                 <Link to={`/friends`} className="link controlBoardItemContainer">
-                    <img src={friendsLogo} className="controlBoardLogo"/>
+                    <img src={friendsLogo} alt="" className="controlBoardLogo"/>
                     <div className="controlBoardItem">Friends</div>
                 </Link>
                 <Link to={`/search`} className="link controlBoardItemContainer">
-                    <img src={searchLogo} className="controlBoardLogo"/>
+                    <img src={searchLogo} alt="" className="controlBoardLogo"/>
                     <div className="controlBoardItem">Search</div>
                 </Link>
             </div>
