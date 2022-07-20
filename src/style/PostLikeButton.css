@@ -1,0 +1,26 @@
+.likeButtonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    margin-left: 1rem;
+    width: fit-content;
+    padding-top: 0.2rem;
+    padding-bottom: 00.2rem;
+}
+
+.likeButtonContainer:hover {
+    background-color: #3d3e3f;
+}
+
+.likeButton {
+    margin-left: 0.5rem;
+}
+
+.likeButtonText {
+    margin-left: 0.5rem;
+    padding-right: 0.5rem;
+}

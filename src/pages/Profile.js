@@ -41,9 +41,9 @@ const Profile = () => {
             }
             });
             if (!response.ok) {
-                const text = await response.text();
+                const text = await response.json();
                 console.log(text);
-                toast.error("Something went wrong");
+                toast.error(text.message);
                 return;
             } else {
                 const image = await response.json();

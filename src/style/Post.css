@@ -31,3 +31,21 @@
     overflow-wrap: break-word;
     padding: 1rem 0 1rem 1rem;
 }
+
+.postStatusContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size:small;
+    color: rgba(211, 211, 211, 0.616);
+}
+
+.likeCountContainer {
+    padding-left: 1rem ;
+}
+
+.commentCountContainer {
+    padding-right: 1rem ;
+}
+    
