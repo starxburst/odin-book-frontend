@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/odin-book-frontend/static/css/main.1eed4b22.css",
+    "main.js": "/odin-book-frontend/static/js/main.f308625f.js",
+    "index.html": "/odin-book-frontend/index.html",
+    "main.1eed4b22.css.map": "/odin-book-frontend/static/css/main.1eed4b22.css.map",
+    "main.f308625f.js.map": "/odin-book-frontend/static/js/main.f308625f.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1eed4b22.css",
+    "static/js/main.f308625f.js"
+  ]
+}
