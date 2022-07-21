@@ -3,6 +3,7 @@ import UserContext from "../UserContext";
 import '../style/PostLikeButton.css';
 import ThumbUpAltIcon from '@mui/icons-material/ThumbUpAlt';
 import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import ThumbDownAltIcon from '@mui/icons-material/ThumbDownAlt';
 import toast, { Toaster } from 'react-hot-toast';
 
 const PostLikeButton = ({ likedUser, postId, getAllPosts }) => {
@@ -20,7 +21,7 @@ const PostLikeButton = ({ likedUser, postId, getAllPosts }) => {
             const json = await response.json();
             if (response.ok) {
                 await getAllPosts();
-                toast.success('You unliked this post!');
+                toast(<div className="toastLikeMessageContainer"><ThumbDownAltIcon className="toastLikeMessage"/>You unliked this post!</div>);
             } else {
                 toast.error(json.message);
             }

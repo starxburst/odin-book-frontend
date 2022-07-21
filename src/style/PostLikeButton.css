@@ -24,3 +24,13 @@
     margin-left: 0.5rem;
     padding-right: 0.5rem;
 }
+
+.toastLikeMessageContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.toastLikeMessage {
+    padding-right: 0.5rem;
+}
