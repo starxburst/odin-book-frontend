@@ -42,19 +42,21 @@ const Search = () => {
                 return toast.error("No user found");
             } else if (!response.ok) {
                 const text = await response.text();
-                setBusy(false);
                 toast.error(text);
+                console.log(isBusy);
                 return;
             } else {
                 const searchResult = await response.json();
                 console.log(searchResult.users);
-                setBusy(false);
                 setSearchResult(searchResult.users);
+                return;
             }
         } catch (error) {
             console.log(error);
-            setBusy(false);
             toast.error("Something went wrong");
+            return;
+        } finally {
+            setBusy(false);
         }
     }
 

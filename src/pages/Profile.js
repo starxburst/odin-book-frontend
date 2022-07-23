@@ -7,6 +7,7 @@ import '../style/Profile.css';
 import { Buffer } from 'buffer';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
+import PostSection from "../components/PostSection";
 
 const Profile = () => {
 
@@ -17,11 +18,41 @@ const Profile = () => {
     const { user, setUser } = useContext(UserContext);
     const [fetchedUserinfo, setFetchedUserinfo] = useState(false);
     const [file, setFile] = useState(null);
+    const [posts, setPosts] = useState([]);
     const [isBusy, setBusy] = useState(true);
 
     useEffect(() => {
+        getAllPosts();
         getUserInfo();
     }, []);
+
+    const getAllPosts = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/${pathId}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": JSON.parse(localStorage.getItem("token"))
+            }
+            })
+            if (!response.ok) {
+                const text = await response.text();
+                toast.error(text);
+                return;
+            } else {
+                const userPosts = await response.json();
+                setPosts(userPosts.posts);
+                console.log(userPosts.posts);
+                console.log(posts);
+                setBusy(false);
+                return;
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
+        }
+        
+    }
 
     //handle file upload
     const onInputChange = (e) => {
@@ -286,6 +317,9 @@ const Profile = () => {
                         </form>
                     </div>                    
                 </div>
+                <div className="postWallContainer">
+                    <PostSection posts={posts} getAllPosts={getAllPosts}/>
+                </div>
             </div>
             <Toaster/>
         </div>:
@@ -315,6 +349,9 @@ const Profile = () => {
                             <button className="sendFriendRequestButton" onClick={handleSendFriendRequest}>Send Friend Request</button>
                         </div>}
                 </div>                
+            </div>
+            <div className="postWallContainer">
+                <PostSection posts={posts} getAllPosts={getAllPosts}/>
             </div>
             <Toaster/>
         </div>
