@@ -5,10 +5,13 @@ import { Buffer } from 'buffer';
 import avatarLogo from "../assets/avatar/avatar.png";
 import toast, { Toaster } from 'react-hot-toast';
 import '../style/Friends.css';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Friends = () => {
 
     const { user, setUser } = useContext(UserContext);
+    const [isBusy, setBusy] = useState(true);
     const [fetchedUserFriends, setFetchedUserFriends] = useState([]);
     const [fetchedUserFriendRequests, setFetchedUserFriendRequests] = useState([]);
 
@@ -46,6 +49,7 @@ const Friends = () => {
                     console.log(fetchedUserFriendRequests);
                     console.log(fetchedUserFriends);
                     console.log(data.user.friends);
+                    setBusy(false);
                     
                 }
             } catch (error) {
@@ -77,6 +81,10 @@ const Friends = () => {
     })
 
     return (
+        isBusy ? 
+        <Box sx={{ display: 'flex', width: '100vw', "justify-content": "center", "padding-top": "20vh" }}>
+            <CircularProgress size={200}/>
+        </Box>:
         <div className="friendsPageContainer">
             <div>
                 <h1>Friends Requests</h1>

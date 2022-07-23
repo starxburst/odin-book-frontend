@@ -10,6 +10,10 @@
     font-size: large;
 }
 
+.searchUserInput:focus {
+    outline: none;
+}
+
 .searchResultContainer {
     display: flex;
     flex-direction: row;

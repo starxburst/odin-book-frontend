@@ -5,6 +5,8 @@ import avatarLogo from "../assets/avatar/avatar.png";
 import toast, { Toaster } from 'react-hot-toast';
 import '../style/Profile.css';
 import { Buffer } from 'buffer';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Profile = () => {
 
@@ -15,6 +17,7 @@ const Profile = () => {
     const { user, setUser } = useContext(UserContext);
     const [fetchedUserinfo, setFetchedUserinfo] = useState(false);
     const [file, setFile] = useState(null);
+    const [isBusy, setBusy] = useState(true);
 
     useEffect(() => {
         getUserInfo();
@@ -91,12 +94,15 @@ const Profile = () => {
 
                     setUser({ ...loggedInUser, isRequested: isRequestedResult });
                     console.log(user);
+                    setBusy(false);
                     return;
                 }
             } catch (error) {
                 console.log(error);
                 toast.error("Something went wrong");
             }
+        } else {
+            setBusy(false);
         }
     }
 
@@ -263,6 +269,10 @@ const Profile = () => {
     }
 
     return (
+        isBusy? 
+        <Box sx={{ display: 'flex', width: '100vw', "justify-content": "center", "padding-top": "20vh" }}>
+            <CircularProgress size={200}/>
+        </Box>:
         pathId === user._id?
         <div className="profilePageContainer">
             <div>

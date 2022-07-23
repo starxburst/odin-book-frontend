@@ -4,10 +4,13 @@ import toast, { Toaster } from 'react-hot-toast';
 import avatarLogo from "../assets/avatar/avatar.png";
 import { Buffer } from 'buffer';
 import '../style/Search.css';
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
 
 const Search = () => {
 
     const [searchResult, setSearchResult] = useState("");
+    const [isBusy, setBusy] = useState(false);
 
     const renderUserAvatar = (avatar) => {
         if (avatar === undefined) {
@@ -19,6 +22,8 @@ const Search = () => {
 
 
     const handleSearchUsers = async (e) => {
+        setSearchResult("");
+        setBusy(true);
         e.preventDefault();
         const data = new FormData(e.target);
         const searchParam = data.get("search");
@@ -37,15 +42,18 @@ const Search = () => {
                 return toast.error("No user found");
             } else if (!response.ok) {
                 const text = await response.text();
+                setBusy(false);
                 toast.error(text);
                 return;
             } else {
                 const searchResult = await response.json();
                 console.log(searchResult.users);
+                setBusy(false);
                 setSearchResult(searchResult.users);
             }
         } catch (error) {
             console.log(error);
+            setBusy(false);
             toast.error("Something went wrong");
         }
     }
@@ -58,6 +66,11 @@ const Search = () => {
                     <input name="search" type="text" placeholder="Search User" className="searchUserInput"></input>
                 </form>
             </div>
+            {isBusy? (
+                <Box sx={{ display: 'flex', width: '100vw', "justify-content": "center", "padding-top": "20vh" }}>
+                    <CircularProgress size={200}/>
+                </Box>
+                ): null}
             { searchResult !== "" ? (
             <div className="searchResultSectionContainer">
                 <h2>Search result</h2>
