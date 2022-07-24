@@ -1,3 +1,8 @@
+.infiniteScrollContainer::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
 .postContainer {
     background-color: #202122;
     border-radius: 10px;

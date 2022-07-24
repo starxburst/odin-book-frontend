@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import UserContext from "../UserContext";
 import { Link } from "react-router-dom";
-import { Buffer } from 'buffer';
+import { Buffer } from "buffer";
 import avatarLogo from "../assets/avatar/avatar.png";
+import '../style/FriendsBoard.css';
 import toast, { Toaster } from 'react-hot-toast';
-import '../style/Friends.css';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-const Friends = () => {
 
+
+const FriendsBoard = () => {
     const { user, setUser } = useContext(UserContext);
     const [isBusy, setBusy] = useState(true);
     const [fetchedUserFriends, setFetchedUserFriends] = useState([]);
-    const [fetchedUserFriendRequests, setFetchedUserFriendRequests] = useState([]);
 
     useEffect(() => {
         getUserInfo();
@@ -26,7 +26,6 @@ const Friends = () => {
             return `data:${avatar.img.contentType};base64, ${Buffer.from(avatar.img.data.data).toString('base64')}`;
         }
     }
-
 
     //get user info
     const getUserInfo = async () => {
@@ -44,12 +43,9 @@ const Friends = () => {
             } else {
                 const data = await response.json();
                 setFetchedUserFriends(data.user.friends);
-                setFetchedUserFriendRequests(data.user.friendRequests);
-                console.log(fetchedUserFriendRequests);
                 console.log(fetchedUserFriends);
                 console.log(data.user.friends);
-                setBusy(false);
-                
+                setBusy(false);                
             }
         } catch (error) {
             console.log(error);
@@ -57,20 +53,9 @@ const Friends = () => {
         }
     }
 
-    let requestsContent = fetchedUserFriendRequests.map(request => {
-        return (
-            <div className="requestContentContainer">
-                <Link to={`/profile/${request._id}`} className="link requestLinkContainer">
-                    <img src={renderUserAvatar(request.avatar)} alt="user avatar" className="postAvatar" />
-                    <div className="requestUserName" >{request.name}</div>
-                </Link>
-            </div>
-        )
-    })
-
     let friendsContent = fetchedUserFriends.map(friend => {
         return (
-            <div className="friendContentContainer">
+            <div className="friendsBoardContentContainer">
                 <Link to={`/profile/${friend._id}`} className="link friendLinkContainer">
                     <img src={renderUserAvatar(friend.avatar)} alt="user avatar" className="postAvatar" />
                     <div className="friendUserName" >{friend.name}</div>
@@ -80,23 +65,16 @@ const Friends = () => {
     })
 
     return (
-        isBusy ? 
-        <Box sx={{ display: 'flex', width: '100vw', "justify-content": "center", "padding-top": "20vh" }}>
-            <CircularProgress size={200}/>
-        </Box>:
-        <div className="friendsPageContainer">
-            <div>
-                <h1>Friends Requests</h1>
-                <div className="friendsRequestContainer">
-                    { fetchedUserFriendRequests.length === 0 ? (
-                        <div>
-                            <p>No pending friend request yet...</p>
-                        </div>
-                        ) : requestsContent
-                    }
-                </div>
-                <h1>Friends</h1>
-                <div className="friendsContainer">
+        isBusy ? (
+        <div className="friendsBoardContainer">
+            <Box sx={{ display: 'flex', width: '15vw', "justify-content": "center", "padding-top": "20vh" }}>
+                <CircularProgress size={200}/>
+            </Box>
+        </div>
+        ):
+        (
+        <div className="friendsBoardContainer">
+            <h1 className="friendsBoardText">Friends</h1>
                     { 
                         fetchedUserFriends.length === 0 ? (
                             <div>
@@ -104,10 +82,9 @@ const Friends = () => {
                             </div>
                             ) : friendsContent
                     }
-                </div>
-            </div>
         </div>
+        )
     )
 }
 
-export default Friends;
+export default FriendsBoard;

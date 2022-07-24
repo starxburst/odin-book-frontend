@@ -1,0 +1,19 @@
+.friendsBoardContainer {
+    display: flex;
+    flex-direction: column;
+    width: 15vw;
+    align-items: center;
+}
+
+.friendsBoardContentContainer {
+    width: 100%;
+    background-color: #202122;
+    margin: 0.5rem 3rem 0.5rem 3rem;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .controlBoardContainer {
+        display: none  ;
+    }
+}

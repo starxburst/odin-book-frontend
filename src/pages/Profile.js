@@ -20,15 +20,17 @@ const Profile = () => {
     const [file, setFile] = useState(null);
     const [posts, setPosts] = useState([]);
     const [isBusy, setBusy] = useState(true);
+    const [postSkip, setPostSkip] = useState(0);
 
     useEffect(() => {
-        getAllPosts();
-        getUserInfo();
-    }, []);
+        setBusy(true)
+        getAllPosts()
+        getUserInfo()
+    }, [pathId]);
 
     const getAllPosts = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/${pathId}`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/user/${pathId}?skip=${postSkip}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -38,20 +40,50 @@ const Profile = () => {
             if (!response.ok) {
                 const text = await response.text();
                 toast.error(text);
-                return;
             } else {
                 const userPosts = await response.json();
-                setPosts(userPosts.posts);
+                setPosts([...posts].concat(userPosts.posts));
+                console.log(userPosts);
                 console.log(userPosts.posts);
                 console.log(posts);
                 setBusy(false);
-                return;
+                setPostSkip(postSkip + 2);
             }
         } catch (error) {
             console.log(error);
             toast.error("Something went wrong");
         }
         
+    }
+
+    const replaceEditedPost = async (postId) => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": JSON.parse(localStorage.getItem("token"))
+                }
+            })
+            if (!response.ok) {
+                const text = await response.text();
+                toast.error(text);
+                return;
+            } else {
+                const fetchedPost = await response.json();
+                console.log(fetchedPost);
+                const index = posts.findIndex(post => post._id === postId);
+                if (index !== -1) {
+                    const tempPosts = [...posts];
+                    tempPosts[index] = fetchedPost.post;
+                    setPosts(tempPosts);
+                    console.log(posts);
+                }
+                }
+            } catch (error) {
+                console.log(error);
+                toast.error("Something went wrong");
+            }
     }
 
     //handle file upload
@@ -85,6 +117,7 @@ const Profile = () => {
                 toast.success('Successfully updated avatar!');
                 e.target.reset();
                 getUserAvatar();
+                window.location.reload();
             }
             /*setUser({ ...user, avatar: data.avatar });*/
         } catch (error) {
@@ -132,8 +165,6 @@ const Profile = () => {
                 console.log(error);
                 toast.error("Something went wrong");
             }
-        } else {
-            setBusy(false);
         }
     }
 
@@ -306,7 +337,6 @@ const Profile = () => {
         </Box>:
         pathId === user._id?
         <div className="profilePageContainer">
-            <div>
                 <div className="profileContainer">
                     <div className="avatarSectionContainer">
                         <img src={user.avatar} alt="" className="profileAvatar"></img>
@@ -318,9 +348,8 @@ const Profile = () => {
                     </div>                    
                 </div>
                 <div className="postWallContainer">
-                    <PostSection posts={posts} getAllPosts={getAllPosts}/>
+                    <PostSection posts={posts} getAllPosts={getAllPosts} replaceEditedPost={replaceEditedPost}/>
                 </div>
-            </div>
             <Toaster/>
         </div>:
 
@@ -351,7 +380,7 @@ const Profile = () => {
                 </div>                
             </div>
             <div className="postWallContainer">
-                <PostSection posts={posts} getAllPosts={getAllPosts}/>
+                <PostSection posts={posts} getAllPosts={getAllPosts} replaceEditedPost={replaceEditedPost}/>
             </div>
             <Toaster/>
         </div>

@@ -12,6 +12,7 @@ import Box from '@mui/material/Box';
 const PostWall = () => {
     const { user, setUser } = useContext(UserContext);
     const [isBusy, setBusy] = useState(true);
+    const [postSkip, setPostSkip] = useState(0);
 
     useEffect(() => {
         getAllPosts();
@@ -22,7 +23,7 @@ const PostWall = () => {
 
     const getAllPosts = async () => {
         try {
-            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/`, {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/?skip=${postSkip}`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -34,17 +35,48 @@ const PostWall = () => {
                 toast.error(text);
                 return;
             } else {
-                const posts = await response.json();
-                setPosts(posts.posts);
-                console.log(posts.posts);
-                console.log(posts);
+                const fetchedPosts = await response.json();
+                setPosts([...posts].concat(fetchedPosts.posts));
+                console.log(fetchedPosts.posts);
+                console.log(fetchedPosts);
                 setBusy(false);
+                setPostSkip(postSkip + 2);
             }
         } catch (error) {
             console.log(error);
             toast.error("Something went wrong");
         }
         
+    }
+
+    const replaceEditedPost = async (postId) => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/${postId}`, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "auth-token": JSON.parse(localStorage.getItem("token"))
+                }
+            })
+            if (!response.ok) {
+                const text = await response.text();
+                toast.error(text);
+                return;
+            } else {
+                const fetchedPost = await response.json();
+                console.log(fetchedPost);
+                const index = posts.findIndex(post => post._id === postId);
+                if (index !== -1) {
+                    const tempPosts = [...posts];
+                    tempPosts[index] = fetchedPost.post;
+                    setPosts(tempPosts);
+                    console.log(posts);
+                }
+                }
+            } catch (error) {
+                console.log(error);
+                toast.error("Something went wrong");
+            }
     }
 
     const getUserAvatar = async () => {
@@ -81,8 +113,8 @@ const PostWall = () => {
             <CircularProgress size={200}/>
         </Box>:
         <div className="postWallContainer">
-            <CreatePost getAllPosts={getAllPosts}/>
-            <PostSection posts={posts} getAllPosts={getAllPosts}/>
+            <CreatePost getAllPosts={getAllPosts} replaceEditedPost={replaceEditedPost}/>
+            <PostSection posts={posts} getAllPosts={getAllPosts} replaceEditedPost={replaceEditedPost}/>
             <Toaster />
         </div>
     )

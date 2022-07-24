@@ -23,7 +23,7 @@ const Comment = ({ comments }) => {
                     <div className="commentHeaderContainer">
                     <img src={renderUserAvatar(comment.user.avatar)} alt="" className="commentAvatar"/>
                         <div>
-                            <Link to={`profile/${comment.user._id}`} className="link">
+                            <Link to={`/profile/${comment.user._id}`} className="link">
                                 <div className="commentHeaderName">{comment.user.name}</div>
                             </Link>
                             <div className="commentHeaderDate">{moment(comment.timestamp).fromNow()}</div>

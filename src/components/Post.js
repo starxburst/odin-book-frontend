@@ -7,10 +7,11 @@ import avatarLogo from '../assets/avatar/avatar.png';
 import Comment from "./Comment";
 import CreateComment from "./CreateComment";
 import LikeButton from "./PostLikeButton";
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { Buffer } from 'buffer';
 import PostLikeButton from "./PostLikeButton";
 
-const Post = ({ posts, getAllPosts }) => {
+const Post = ({ posts, getAllPosts, replaceEditedPost }) => {
 
     const { user, setUser } = useContext(UserContext);
 
@@ -43,9 +44,9 @@ const Post = ({ posts, getAllPosts }) => {
                         <span className="commentCountContainer">{post.comments.length > 1? `${post.comments.length} comments`: `${post.comments.length} comment`}</span>
                     </div>
                     <hr className="commentHr" />
-                    <PostLikeButton likedUser={post.likes} postId={post._id} getAllPosts={getAllPosts}/>
-                    <Comment comments={post.comments}/>
-                    <CreateComment postId={post._id} getAllPosts={getAllPosts}/>
+                    <PostLikeButton likedUser={post.likes} postId={post._id} getAllPosts={getAllPosts} replaceEditedPost={replaceEditedPost}/>
+                    <Comment comments={post.comments} />
+                    <CreateComment postId={post._id} getAllPosts={getAllPosts} replaceEditedPost={replaceEditedPost}/>
                 </div>
             </div>
         )
@@ -54,9 +55,15 @@ const Post = ({ posts, getAllPosts }) => {
 
 
     return (
-        <div>
+        <InfiniteScroll
+            className="infiniteScrollContainer"
+            dataLength={posts.length}
+            next={getAllPosts}
+            hasMore="true"
+            loader={<h4>Loading...</h4>}
+            height="100vh">
             {postContent}
-        </div>
+        </InfiniteScroll>
     )
 }
 

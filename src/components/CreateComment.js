@@ -4,7 +4,7 @@ import '../style/CreateComment.css';
 import avatarLogo from '../assets/avatar/avatar.png';
 import toast, { Toaster } from 'react-hot-toast';
 
-const CreateComment = ({ postId, getAllPosts }) => {
+const CreateComment = ({ postId, getAllPosts, replaceEditedPost }) => {
 
     const { user, setUser } = useContext(UserContext);
 
@@ -35,7 +35,7 @@ const CreateComment = ({ postId, getAllPosts }) => {
                 const comment = await response.json();
                 toast.success('Successfully Created Comment!');
                 console.log(comment);
-                getAllPosts();
+                replaceEditedPost(postId);
                 e.target.reset();
             }        
         } catch (error) {
