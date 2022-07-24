@@ -24,22 +24,62 @@ const Profile = () => {
 
 
     useEffect(() => {
+        
         resetPosts()
+        firstGetAllPosts();
         console.log(`path ID changed to ${pathId}`)
-        setBusy(true)
+        
         getUserInfo()
     }, [pathId]);
 
     const resetPosts = async () => {
-        setPosts([])
-        setPostSkip(0)        
-       
+        
+        setPosts([]);
+        setPostSkip(0);
         console.log(`reset posts ${posts} and skip to ${postSkip}`);
-        await getAllPosts();
+        
     }
+
+    const firstGetAllPosts = async () => {
+        try {
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/user/${pathId}?skip=${0}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "auth-token": JSON.parse(localStorage.getItem("token"))
+            }
+            })
+            if (!response.ok) {
+                const text = await response.text();
+                console.log(text);
+                toast.error(text);
+            } else {
+                const userPosts = await response.json();
+                console.log(posts);
+                if (userPosts.posts.length > 0) {
+                    setPosts(prevState => [...prevState, ...userPosts.posts]);
+                    console.log(`posts: ${posts}`);
+                }
+                
+                
+                setPostSkip(prevState => 5);
+                console.log(userPosts);
+                console.log(userPosts.posts);
+                console.log(posts);
+                setBusy(false);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
+        }
+        
+    }
+
+
 
     const getAllPosts = async () => {
         try {
+            console.log(`skip to ${postSkip}`);
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/user/${pathId}?skip=${postSkip}`, {
             method: "GET",
             headers: {
@@ -49,17 +89,22 @@ const Profile = () => {
             })
             if (!response.ok) {
                 const text = await response.text();
+                console.log(text);
                 toast.error(text);
             } else {
                 const userPosts = await response.json();
                 console.log(posts);
-                const tempPosts = [...posts].concat(userPosts.posts);
-                setPosts(tempPosts);
+                if (userPosts.posts.length > 0) {
+                    setPosts(prevState => [...prevState, ...userPosts.posts]);
+                    console.log(`posts: ${posts}`);
+                }
+                
+                
+                setPostSkip(postSkip + 5);
                 console.log(userPosts);
                 console.log(userPosts.posts);
                 console.log(posts);
                 setBusy(false);
-                setPostSkip(postSkip + 2);
             }
         } catch (error) {
             console.log(error);

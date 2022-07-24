@@ -6,7 +6,6 @@ import avatarLogo from "../assets/avatar/avatar.png";
 import friendsLogo from "../assets/icon/friends.png";
 import searchLogo from "../assets/icon/search.png";
 import settingLogo from "../assets/icon/setting.png";
-import Profile from "../pages/Profile";
 
 const ControlBoard = () => {
     const { user, setUser } = useContext(UserContext);

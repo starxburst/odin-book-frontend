@@ -61,7 +61,7 @@ const Post = ({ posts, getAllPosts, replaceEditedPost }) => {
             next={getAllPosts}
             hasMore="true"
             loader={<h4>Loading...</h4>}
-            height="100vh">
+            height="90vh">
             {postContent}
         </InfiniteScroll>
     )

@@ -40,7 +40,7 @@ const PostWall = () => {
                 console.log(fetchedPosts.posts);
                 console.log(fetchedPosts);
                 setBusy(false);
-                setPostSkip(postSkip + 2);
+                setPostSkip(postSkip + 5);
             }
         } catch (error) {
             console.log(error);

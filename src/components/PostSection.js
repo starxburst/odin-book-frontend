@@ -21,13 +21,17 @@ const PostSection = ({posts, getAllPosts, replaceEditedPost}) => {
     )*/
 
     return (
+        posts.length === 0 ? 
+            <div>
+                <h1 className="postTitle">No posts yet</h1>
+            </div>
+        : 
         <div className="postSectionContainer">
             <Post posts={posts} getAllPosts={getAllPosts} replaceEditedPost={replaceEditedPost} />
             <Toaster />
         </div>
-    )
-
-    
+        
+    )    
 }
 
 export default PostSection;

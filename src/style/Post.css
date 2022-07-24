@@ -1,3 +1,7 @@
+.infiniteScrollContainer {
+    margin-top: 1rem;
+}
+
 .infiniteScrollContainer::-webkit-scrollbar {
     width: 0px;
     background: transparent;
