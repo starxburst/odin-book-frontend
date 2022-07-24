@@ -32,6 +32,10 @@
     margin-left: 0.5rem;
 }
 
+.commentHeaderName:hover {
+    text-decoration: underline;
+}
+
 .commentHeaderDate {
     display: flex;
     font-size: small;

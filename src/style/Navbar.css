@@ -11,6 +11,10 @@
     top: 0;
   }
 
+  .nav-drawer {
+    display: none;
+  }
+
   .logo {
     font-size: 20px;
     font-weight: bold;
@@ -28,7 +32,6 @@
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    margin-right: 1rem;
   }
   
   .listItem {
@@ -43,3 +46,10 @@
     border-radius: 50%;
     object-fit: cover;
   }
+
+  @media (max-width: 768px) {
+    #nav-logout {
+      display: none;
+    }
+}
+

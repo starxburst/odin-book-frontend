@@ -12,7 +12,7 @@ import PostSection from "../components/PostSection";
 const Profile = () => {
 
     const location = useLocation();
-    const pathId = location.pathname.split("/")[2];
+    let pathId = location.pathname.split("/")[2];
     console.log(pathId);
 
     const { user, setUser } = useContext(UserContext);
@@ -22,11 +22,21 @@ const Profile = () => {
     const [isBusy, setBusy] = useState(true);
     const [postSkip, setPostSkip] = useState(0);
 
+
     useEffect(() => {
+        resetPosts()
+        console.log(`path ID changed to ${pathId}`)
         setBusy(true)
-        getAllPosts()
         getUserInfo()
     }, [pathId]);
+
+    const resetPosts = async () => {
+        setPosts([])
+        setPostSkip(0)        
+       
+        console.log(`reset posts ${posts} and skip to ${postSkip}`);
+        await getAllPosts();
+    }
 
     const getAllPosts = async () => {
         try {
@@ -42,7 +52,9 @@ const Profile = () => {
                 toast.error(text);
             } else {
                 const userPosts = await response.json();
-                setPosts([...posts].concat(userPosts.posts));
+                console.log(posts);
+                const tempPosts = [...posts].concat(userPosts.posts);
+                setPosts(tempPosts);
                 console.log(userPosts);
                 console.log(userPosts.posts);
                 console.log(posts);

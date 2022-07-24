@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import UserContext from "../UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import avatarLogo from "../assets/avatar/avatar.png";
@@ -13,7 +13,6 @@ const Navbar = () => {
         navigate("/login");
     }
 
-
     return (
 
         <div className="navbar">
@@ -23,10 +22,10 @@ const Navbar = () => {
             {user ? (
                 <ul className="list">
                     <li className="listItem">
-                        <img src={user.avatar} alt="" className="avatar"></img>
+                        <img src={user.avatar} alt="" className="avatar" id="nav-avatar"></img>
                     </li>
-                    <li className="listItem">{user.name}</li>
-                    <li onClick={() => logout()} className="listItem">Logout</li>
+                    <li className="listItem" id="nav-username">{user.name}</li>
+                    <li onClick={() => logout()} className="listItem" id="nav-logout">Logout</li>
                 </ul>
             ) : (<Link className="link" to="/login">Login</Link>)
             }            
