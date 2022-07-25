@@ -66,6 +66,7 @@ const Search = () => {
                 <h1>Search User</h1>
                 <form onSubmit={(e) => handleSearchUsers(e)}>
                     <input name="search" type="text" placeholder="Search User" className="searchUserInput"></input>
+                    <button type="submit" className="searchUserButton">Search</button>
                 </form>
             </div>
             {isBusy? (

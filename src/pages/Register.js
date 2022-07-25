@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import UserContext from "../UserContext";
 import '../style/Register.css';
 import { useNavigate } from "react-router-dom";
+import toast, { Toaster } from 'react-hot-toast';
 
 const Register = () => {
 
@@ -10,34 +11,45 @@ const Register = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        const data = new FormData(e.target);
-        console.log(data);
-        const email = data.get("email");
-        const name = data.get("name");
-        const password = data.get("password");
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/register`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body:JSON.stringify({
-                "name": name,
-                "email": email,
-                "password": password
-            }),
-            mode: 'cors'
-        });
-        const user = await response.json();
-        if (user.token) {
-            console.log(user.user);
-            localStorage.setItem("token", JSON.stringify(user.token));
-            setUser(user.user.name);
-            navigate("/");
-        } else {
-            console.log(user);
-            alert(user.message);
+
+        try {
+            e.preventDefault();
+            const data = new FormData(e.target);
+            console.log(data);
+            const email = data.get("email");
+            const name = data.get("name");
+            const password = data.get("password");
+            const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/register`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body:JSON.stringify({
+                    "name": name,
+                    "email": email,
+                    "password": password
+                }),
+                mode: 'cors'
+            });
+
+            if (!response.ok) {
+                const text = await response.text();
+                toast.error(text);
+                return;
+            };
+
+            const user = await response.json();
+            if (user.token) {
+                console.log(user.user);
+                localStorage.setItem("token", JSON.stringify(user.token));
+                setUser(user.user);
+                navigate("/");
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error("Something went wrong");
         }
+        
     }
 
     return (
@@ -51,6 +63,7 @@ const Register = () => {
                     <button className="submit">Sign Up</button>
                 </form>
             </div>
+            <Toaster />
         </div>
     )
 

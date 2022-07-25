@@ -24,11 +24,10 @@ const Profile = () => {
 
 
     useEffect(() => {
-        
+        setBusy(true);
         resetPosts()
         firstGetAllPosts();
-        console.log(`path ID changed to ${pathId}`)
-        
+        console.log(`path ID changed to ${pathId}`)        
         getUserInfo()
     }, [pathId]);
 
@@ -57,7 +56,7 @@ const Profile = () => {
                 const userPosts = await response.json();
                 console.log(posts);
                 if (userPosts.posts.length > 0) {
-                    setPosts(prevState => [...prevState, ...userPosts.posts]);
+                    setPosts(userPosts.posts);
                     console.log(`posts: ${posts}`);
                 }
                 

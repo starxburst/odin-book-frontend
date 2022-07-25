@@ -11,11 +11,18 @@
     top: 0;
   }
 
-  .nav-drawer {
+  .navbar-name {
+
+  }
+
+  .nav-drawer-container {
     display: none;
   }
 
   .logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     font-size: 20px;
     font-weight: bold;
     color: #61dafb;
@@ -50,6 +57,20 @@
   @media (max-width: 768px) {
     #nav-logout {
       display: none;
+    }
+
+    .navbar-name {
+      font-size: 1rem;
+    }
+
+    .listItem {
+      list-style: none;
+      margin-right: 0.5rem;
+      cursor: pointer;
+    }
+
+    .nav-drawer-container {
+      display: block;
     }
 }
 

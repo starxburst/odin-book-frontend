@@ -14,6 +14,19 @@
     outline: none;
 }
 
+.searchUserButton {
+    background-color: #333434;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 3rem;
+    align-self: center;
+    margin-right: 20px;
+    font-weight: bold;
+}
+
 .searchResultContainer {
     display: flex;
     flex-direction: row;

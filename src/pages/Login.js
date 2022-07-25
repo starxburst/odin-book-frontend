@@ -4,6 +4,8 @@ import Register from "./Register";
 import { Link, useNavigate } from "react-router-dom";
 import '../style/Login.css';
 import toast, { Toaster } from 'react-hot-toast';
+import avatarLogo from '../assets/avatar/avatar.png';
+import { Buffer } from 'buffer';
 
 const Login = () => {
 
@@ -66,6 +68,8 @@ const Login = () => {
             const user = await response.json();
             if (user.token) {
                 localStorage.setItem("token", JSON.stringify(user.token));
+                const avatar = renderUserAvatar(user.user.avatar);
+                user.user.avatar = avatar;
                 setUser(user.user);
                 console.log(user);
                 toast.success('Successfully Logged In!')
@@ -80,7 +84,16 @@ const Login = () => {
         }
     }
 
-    return (
+    const renderUserAvatar = (avatar) => {
+        if (avatar === undefined) {
+            return avatarLogo;
+        } else {
+            return `data:${avatar.img.contentType};base64, ${Buffer.from(avatar.img.data.data).toString('base64')}`;
+        }
+    }
+
+    /*
+        return (
         <div className="login">
             <h1 className="loginTitle">Choose a Login Method</h1>
             <div className="wrapper">
@@ -106,6 +119,26 @@ const Login = () => {
                     </form>
                     <Link className="link" to="/register">
                         <button className="submit">Register</button>
+                    </Link>                    
+                </div>
+            </div>
+            <Toaster />
+        </div>
+    )
+    */
+
+    return (
+        <div className="login">
+            <div className="wrapper">
+                <div className="right">
+                <h1 className="loginTitle">Enter your email and password</h1>
+                    <form onSubmit={(e) => handleSubmit(e)} action="POST">
+                        <input name="email" type="email" placeholder="Email" className="email"/>
+                        <input name="password" type="password" placeholder="Password" className="password"/>
+                        <button className="submit">Login</button>
+                    </form>
+                    <Link className="link" to="/register">
+                        <button className="submit registerButton">Register</button>
                     </Link>                    
                 </div>
             </div>

@@ -4,7 +4,7 @@ import '../style/CreatePost.css';
 import avatarLogo from "../assets/avatar/avatar.png";
 import toast, { Toaster } from 'react-hot-toast';
 
-const CreatePost = ({getAllPosts}) => {
+const CreatePost = ({getAllPosts, posts, setPosts}) => {
 
     const { user } = useContext(UserContext);
 
@@ -31,13 +31,18 @@ const CreatePost = ({getAllPosts}) => {
                 const post = await response.json();
                 toast.success('Successfully Created Post!');
                 console.log(post);
-                getAllPosts();
+                concatNewPost(post.post);
                 e.target.reset();
             }
         } catch (error) {
             console.log(error);
             toast.error("Something went wrong");
         }
+    }
+
+    const concatNewPost = (post) => {
+        setPosts([post, ...posts]);
+        console.log(posts);
     }
     
 

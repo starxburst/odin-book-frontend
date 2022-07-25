@@ -98,6 +98,10 @@ input {
     cursor: pointer;
 }
 
+.registerButton {
+    width: fit-content;
+}
+
 .right .link {
     width: 50%;
     padding: 10px;

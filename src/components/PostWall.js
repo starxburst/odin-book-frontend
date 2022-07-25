@@ -113,7 +113,7 @@ const PostWall = () => {
             <CircularProgress size={200}/>
         </Box>:
         <div className="postWallContainer">
-            <CreatePost getAllPosts={getAllPosts} replaceEditedPost={replaceEditedPost}/>
+            <CreatePost getAllPosts={getAllPosts} posts={posts} setPosts={setPosts}/>
             <PostSection posts={posts} getAllPosts={getAllPosts} replaceEditedPost={replaceEditedPost}/>
             <Toaster />
         </div>

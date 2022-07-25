@@ -1,6 +1,7 @@
 import React, { useContext, useMemo, useState } from "react";
 import UserContext from "../UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import MuiDrawer from "./MuiDrawer";
 import avatarLogo from "../assets/avatar/avatar.png";
 import '../style/Navbar.css';
 
@@ -17,7 +18,10 @@ const Navbar = () => {
 
         <div className="navbar">
             <span className="logo">
-                <Link className="link" to="/">Fake Book</Link>
+                <div className="nav-drawer-container">
+                    <MuiDrawer className='nav-drawer' logout={logout}/>
+                </div>
+                <Link className="link navbar-name" to="/">Fake Book</Link>
             </span>
             {user ? (
                 <ul className="list">

@@ -1,0 +1,29 @@
+.MuiDrawerItemLinkContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.MuiDrawerItemDivContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.MuiDrawerItemDivContainer:hover {
+    cursor: pointer;
+}
+
+.MuiDrawerItemName {
+    font-size: large;
+    color: white;
+    margin-left: 1rem;
+}
+
+.drawer-hr {
+    border-color: #c9cccf;
+}
