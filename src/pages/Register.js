@@ -11,7 +11,7 @@ const Register = () => {
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
-
+        const toastId = toast.loading('Loading...');
         try {
             e.preventDefault();
             const data = new FormData(e.target);
@@ -34,12 +34,15 @@ const Register = () => {
 
             if (!response.ok) {
                 const text = await response.text();
-                toast.error(text);
+                toast.error(text, {
+                    id: toastId,
+                });
                 return;
             };
 
             const user = await response.json();
             if (user.token) {
+                toast.dismiss(toastId);
                 console.log(user.user);
                 localStorage.setItem("token", JSON.stringify(user.token));
                 setUser(user.user);
@@ -47,7 +50,9 @@ const Register = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            toast.error("Something went wrong", {
+                id: toastId,
+            });
         }
         
     }

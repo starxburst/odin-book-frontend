@@ -19,12 +19,14 @@ const Profile = () => {
     const [fetchedUserinfo, setFetchedUserinfo] = useState(false);
     const [file, setFile] = useState(null);
     const [posts, setPosts] = useState([]);
-    const [isBusy, setBusy] = useState(true);
+    const [isFetchingPost, setIsFetchingPost] = useState(true);
+    const [isFetchingFriendsStaues, setIsFetchingFriendsStaues] = useState(true);
     const [postSkip, setPostSkip] = useState(0);
 
 
     useEffect(() => {
-        setBusy(true);
+        setIsFetchingPost(true);
+        setIsFetchingFriendsStaues(true);
         resetPosts()
         firstGetAllPosts();
         console.log(`path ID changed to ${pathId}`)        
@@ -65,7 +67,7 @@ const Profile = () => {
                 console.log(userPosts);
                 console.log(userPosts.posts);
                 console.log(posts);
-                setBusy(false);
+                setIsFetchingPost(false);
             }
         } catch (error) {
             console.log(error);
@@ -103,7 +105,7 @@ const Profile = () => {
                 console.log(userPosts);
                 console.log(userPosts.posts);
                 console.log(posts);
-                setBusy(false);
+                setIsFetchingPost(false);
             }
         } catch (error) {
             console.log(error);
@@ -152,6 +154,7 @@ const Profile = () => {
     const handleAvatarSubmit = async (e) => {
         e.preventDefault();
         console.log(file);
+        const toastId = toast.loading('Loading...');
         const formData = new FormData();
         formData.append("imageFile", file);
         try {
@@ -165,12 +168,16 @@ const Profile = () => {
             if (!response.ok) {
                 const text = await response.json();
                 console.log(text);
-                toast.error(text.message);
+                toast.error(text.message, {
+                    id: toastId,
+                });
                 return;
             } else {
                 const image = await response.json();
                 console.log(image);
-                toast.success('Successfully updated avatar!');
+                toast.success('Successfully updated avatar!', {
+                    id: toastId,
+                });
                 e.target.reset();
                 getUserAvatar();
                 window.location.reload();
@@ -178,7 +185,9 @@ const Profile = () => {
             /*setUser({ ...user, avatar: data.avatar });*/
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            toast.error("Something went wrong", {
+                id: toastId,
+            });
         }
         
     }
@@ -214,13 +223,15 @@ const Profile = () => {
 
                     setUser({ ...loggedInUser, isRequested: isRequestedResult });
                     console.log(user);
-                    setBusy(false);
+                    setIsFetchingFriendsStaues(false);
                     return;
                 }
             } catch (error) {
                 console.log(error);
                 toast.error("Something went wrong");
             }
+        } else {
+            setIsFetchingFriendsStaues(false);
         }
     }
 
@@ -284,6 +295,7 @@ const Profile = () => {
     }
 
     const handleSendFriendRequest = async () => {
+        const toastId = toast.loading('Loading...');
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/${fetchedUserinfo._id}/friendrequest`, {
                 method: "GET",
@@ -294,21 +306,28 @@ const Profile = () => {
             })
             if (!response.ok) {
                 const text = await response.text();
-                toast.error(text);
+                toast.error(text, {
+                    id: toastId,
+                });
                 return;
             } else {
                 const data = await response.json();
                 console.log(data);
-                toast.success("Friend request sent!");
-                getUserInfo();
+                await getUserInfo();
+                toast.success("Friend request sent!", {
+                    id: toastId,
+                });
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            toast.error("Something went wrong", {
+                id: toastId,
+            });
         }
     }
 
     const handleAcceptRequest = async () => {
+        const toastId = toast.loading('Loading...');
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/${fetchedUserinfo._id}/acceptfriendrequest`, {
                 method: "GET",
@@ -319,22 +338,29 @@ const Profile = () => {
             })
             if (!response.ok) {
                 const text = await response.text();
-                toast.error(text);
+                toast.error(text, {
+                    id: toastId,
+                });
                 return;
             } else {
                 const data = await response.json();
                 console.log(data);
-                toast.success("Friend request accepted!");
-                refreshUserInfo();
-                getUserInfo();
+                await refreshUserInfo();
+                await getUserInfo();
+                toast.success("Friend request accepted!", {
+                    id: toastId,
+                });
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            toast.error("Something went wrong", {
+                id: toastId,
+            });
         }
     }
 
     const handleRejectRequest = async () => {
+        const toastId = toast.loading('Loading...');
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/${fetchedUserinfo._id}/rejectfriendrequest`, {
                 method: "GET",
@@ -345,22 +371,29 @@ const Profile = () => {
             })
             if (!response.ok) {
                 const text = await response.text();
-                toast.error(text);
+                toast.error(text, {
+                    id: toastId,
+                });
                 return;
             } else {
                 const data = await response.json();
-                console.log(data);
-                toast.success("Friend request rejected!");
-                refreshUserInfo();
-                getUserInfo();
+                console.log(data);                
+                await refreshUserInfo();
+                await getUserInfo();
+                toast.success("Friend request rejected!", {
+                    id: toastId,
+                });
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            toast.error("Something went wrong", {
+                id: toastId,
+            });
         }
     }
 
     const handleRemoveFriend = async () => {
+        const toastId = toast.loading('Loading...');
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/${fetchedUserinfo._id}/removefriend`, {
                 method: "GET",
@@ -371,23 +404,29 @@ const Profile = () => {
             })
             if (!response.ok) {
                 const text = await response.text();
-                toast.error(text);
+                toast.error(text, {
+                    id: toastId,
+                });
                 return;
             } else {
                 const data = await response.json();
-                console.log(data);
-                toast.success("Friend removed!");
-                refreshUserInfo();
-                getUserInfo();
+                console.log(data);                
+                await refreshUserInfo();
+                await getUserInfo();
+                toast.success("Friend removed!", {
+                    id: toastId,
+                });
             }
         } catch (error) {
             console.log(error);
-            toast.error("Something went wrong");
+            toast.error("Something went wrong", {
+                id: toastId,
+            });
         }
     }
 
     return (
-        isBusy? 
+        isFetchingPost || isFetchingFriendsStaues? 
         <Box sx={{ display: 'flex', width: '100vw', "justify-content": "center", "padding-top": "20vh" }}>
             <CircularProgress size={200}/>
         </Box>:
