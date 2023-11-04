@@ -15,7 +15,6 @@ const Register = () => {
         try {
             e.preventDefault();
             const data = new FormData(e.target);
-            console.log(data);
             const email = data.get("email");
             const name = data.get("name");
             const password = data.get("password");
@@ -43,7 +42,6 @@ const Register = () => {
             const user = await response.json();
             if (user.token) {
                 toast.dismiss(toastId);
-                console.log(user.user);
                 localStorage.setItem("token", JSON.stringify(user.token));
                 setUser(user.user);
                 navigate("/");

@@ -32,7 +32,6 @@ const Login = () => {
             });
             if (!response.ok) {
                 const text = await response.text();
-                console.log(text);
                 toast.error("Something went wrong", {
                     id: toastId,
                 });
@@ -40,7 +39,6 @@ const Login = () => {
             } else {
                 const data = await response.json();
                 setUser(data.user);
-                console.log(data.user);
                 toast.remove(toastId);
                 navigate("/");
             }
@@ -55,7 +53,6 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
-        console.log(data);
         const email = data.get("email");
         const password = data.get("password");
         const toastId = toast.loading('Loading...');
@@ -81,7 +78,6 @@ const Login = () => {
                 const avatar = renderUserAvatar(user.user.avatar);
                 user.user.avatar = avatar;
                 setUser(user.user);
-                console.log(user);
                 toast.success('Successfully Logged In!', {
                     id: toastId,
                 })
@@ -91,7 +87,6 @@ const Login = () => {
                 setTimeout(() => { clearInterval(loginNoti) }, 2000);
             }
         } catch (error) {
-            console.log(user);
             toast.error("Something went wrong", {
                 id: toastId,
             });
@@ -124,7 +119,6 @@ const Login = () => {
                 const avatar = renderUserAvatar(user.user.avatar);
                 user.user.avatar = avatar;
                 setUser(user.user);
-                console.log(user);
                 toast.success('Successfully Logged In!', {
                     id: toastId,
                 })
@@ -134,7 +128,6 @@ const Login = () => {
                 setTimeout(() => { clearInterval(loginNoti) }, 2000);
             }
         } catch (error) {
-            console.log(user);
             toast.error("Something went wrong", {
                 id: toastId,
             });

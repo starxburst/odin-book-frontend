@@ -37,8 +37,6 @@ const PostWall = () => {
             } else {
                 const fetchedPosts = await response.json();
                 setPosts([...posts].concat(fetchedPosts.posts));
-                console.log(fetchedPosts.posts);
-                console.log(fetchedPosts);
                 setBusy(false);
                 setPostSkip(postSkip + 5);
             }
@@ -64,13 +62,11 @@ const PostWall = () => {
                 return;
             } else {
                 const fetchedPost = await response.json();
-                console.log(fetchedPost);
                 const index = posts.findIndex(post => post._id === postId);
                 if (index !== -1) {
                     const tempPosts = [...posts];
                     tempPosts[index] = fetchedPost.post;
                     setPosts(tempPosts);
-                    console.log(posts);
                 }
                 }
             } catch (error) {
@@ -97,7 +93,6 @@ const PostWall = () => {
                 return;
             } else {
                 const avatar = await response.json();
-                console.log(avatar);
                 const avatarData = `data:${avatar.avatar.img.contentType};base64, ${Buffer.from(avatar.avatar.img.data.data).toString('base64')}`;
                 setUser({ ...user, avatar: avatarData});
             }

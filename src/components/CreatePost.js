@@ -30,7 +30,6 @@ const CreatePost = ({getAllPosts, posts, setPosts}) => {
             } else {
                 const post = await response.json();
                 toast.success('Successfully Created Post!');
-                console.log(post);
                 concatNewPost(post.post);
                 e.target.reset();
             }
@@ -42,7 +41,6 @@ const CreatePost = ({getAllPosts, posts, setPosts}) => {
 
     const concatNewPost = (post) => {
         setPosts([post, ...posts]);
-        console.log(posts);
     }
     
 

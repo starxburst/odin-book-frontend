@@ -13,7 +13,6 @@ const Profile = () => {
 
     const location = useLocation();
     let pathId = location.pathname.split("/")[2];
-    console.log(pathId);
 
     const { user, setUser } = useContext(UserContext);
     const [fetchedUserinfo, setFetchedUserinfo] = useState(false);
@@ -29,7 +28,6 @@ const Profile = () => {
         setIsFetchingFriendsStaues(true);
         resetPosts()
         firstGetAllPosts();
-        console.log(`path ID changed to ${pathId}`)        
         getUserInfo()
     }, [pathId]);
 
@@ -37,7 +35,6 @@ const Profile = () => {
         
         setPosts([]);
         setPostSkip(0);
-        console.log(`reset posts ${posts} and skip to ${postSkip}`);
         
     }
 
@@ -52,21 +49,15 @@ const Profile = () => {
             })
             if (!response.ok) {
                 const text = await response.text();
-                console.log(text);
                 toast.error(text);
             } else {
                 const userPosts = await response.json();
-                console.log(posts);
                 if (userPosts.posts.length > 0) {
                     setPosts(userPosts.posts);
-                    console.log(`posts: ${posts}`);
                 }
                 
                 
                 setPostSkip(prevState => 5);
-                console.log(userPosts);
-                console.log(userPosts.posts);
-                console.log(posts);
                 setIsFetchingPost(false);
             }
         } catch (error) {
@@ -80,7 +71,6 @@ const Profile = () => {
 
     const getAllPosts = async () => {
         try {
-            console.log(`skip to ${postSkip}`);
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/user/${pathId}?skip=${postSkip}`, {
             method: "GET",
             headers: {
@@ -90,21 +80,15 @@ const Profile = () => {
             })
             if (!response.ok) {
                 const text = await response.text();
-                console.log(text);
                 toast.error(text);
             } else {
                 const userPosts = await response.json();
-                console.log(posts);
                 if (userPosts.posts.length > 0) {
                     setPosts(prevState => [...prevState, ...userPosts.posts]);
-                    console.log(`posts: ${posts}`);
                 }
                 
                 
                 setPostSkip(postSkip + 5);
-                console.log(userPosts);
-                console.log(userPosts.posts);
-                console.log(posts);
                 setIsFetchingPost(false);
             }
         } catch (error) {
@@ -129,13 +113,11 @@ const Profile = () => {
                 return;
             } else {
                 const fetchedPost = await response.json();
-                console.log(fetchedPost);
                 const index = posts.findIndex(post => post._id === postId);
                 if (index !== -1) {
                     const tempPosts = [...posts];
                     tempPosts[index] = fetchedPost.post;
                     setPosts(tempPosts);
-                    console.log(posts);
                 }
                 }
             } catch (error) {
@@ -147,13 +129,11 @@ const Profile = () => {
     //handle file upload
     const onInputChange = (e) => {
         setFile(e.target.files[0]);
-        console.log(file);
     }
 
     //upload image
     const handleAvatarSubmit = async (e) => {
         e.preventDefault();
-        console.log(file);
         const toastId = toast.loading('Loading...');
         const formData = new FormData();
         formData.append("imageFile", file);
@@ -167,14 +147,12 @@ const Profile = () => {
             });
             if (!response.ok) {
                 const text = await response.json();
-                console.log(text);
                 toast.error(text.message, {
                     id: toastId,
                 });
                 return;
             } else {
                 const image = await response.json();
-                console.log(image);
                 toast.success('Successfully updated avatar!', {
                     id: toastId,
                 });
@@ -203,7 +181,6 @@ const Profile = () => {
                 });
                 if (!response.ok) {
                     const text = await response.text();
-                    console.log(text);
                     toast.error("Something went wrong");
                     return;
                 } else {
@@ -211,18 +188,12 @@ const Profile = () => {
                     const avatar = renderUserAvatar(data.user.avatar);
                     data.user.avatar = avatar;
                     data.user.isFriend = data.user.friends.some(friend => friend._id === user._id);
-                    console.log(data.user.friends);
                     data.user.isRequested = data.user.friendRequests.some(request => request._id === user._id);
-                    console.log(data.user);
                     setFetchedUserinfo(data.user);
                     const loggedInUser = await refreshUserInfo();
-                    console.log(loggedInUser);
-                    console.log(loggedInUser.friendRequests);
                     const isRequestedResult = loggedInUser.friendRequests.includes(pathId);
-                    console.log(isRequestedResult);
 
                     setUser({ ...loggedInUser, isRequested: isRequestedResult });
-                    console.log(user);
                     setIsFetchingFriendsStaues(false);
                     return;
                 }
@@ -245,14 +216,12 @@ const Profile = () => {
             });
             if (!response.ok) {
                 const text = await response.text();
-                console.log(text);
                 toast.error("Something went wrong");
                 return;
             } else {
                 const data = await response.json();
                 const avatar = renderUserAvatar(data.user.avatar);
                 data.user.avatar = avatar;
-                console.log(data.user);
                 return data.user;
             }
         } catch (error) {
@@ -284,7 +253,6 @@ const Profile = () => {
                 return;
             } else {
                 const avatar = await response.json();
-                console.log(avatar);
                 const avatarData = `data:${avatar.avatar.img.contentType};base64, ${Buffer.from(avatar.avatar.img.data.data).toString('base64')}`;
                 setUser({ ...user, avatar: avatarData});
             }
@@ -312,7 +280,6 @@ const Profile = () => {
                 return;
             } else {
                 const data = await response.json();
-                console.log(data);
                 await getUserInfo();
                 toast.success("Friend request sent!", {
                     id: toastId,
@@ -344,7 +311,6 @@ const Profile = () => {
                 return;
             } else {
                 const data = await response.json();
-                console.log(data);
                 await refreshUserInfo();
                 await getUserInfo();
                 toast.success("Friend request accepted!", {
@@ -377,7 +343,6 @@ const Profile = () => {
                 return;
             } else {
                 const data = await response.json();
-                console.log(data);                
                 await refreshUserInfo();
                 await getUserInfo();
                 toast.success("Friend request rejected!", {
@@ -410,7 +375,6 @@ const Profile = () => {
                 return;
             } else {
                 const data = await response.json();
-                console.log(data);                
                 await refreshUserInfo();
                 await getUserInfo();
                 toast.success("Friend removed!", {

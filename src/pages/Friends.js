@@ -38,16 +38,12 @@ const Friends = () => {
             });
             if (!response.ok) {
                 const text = await response.text();
-                console.log(text);
                 toast.error("Something went wrong");
                 return;
             } else {
                 const data = await response.json();
                 setFetchedUserFriends(data.user.friends);
                 setFetchedUserFriendRequests(data.user.friendRequests);
-                console.log(fetchedUserFriendRequests);
-                console.log(fetchedUserFriends);
-                console.log(data.user.friends);
                 setBusy(false);
                 
             }

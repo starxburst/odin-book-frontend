@@ -27,7 +27,6 @@ const Search = () => {
         e.preventDefault();
         const data = new FormData(e.target);
         const searchParam = data.get("search");
-        console.log(searchParam);
 
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/user/search/${searchParam}`, {
@@ -43,11 +42,9 @@ const Search = () => {
             } else if (!response.ok) {
                 const text = await response.text();
                 toast.error(text);
-                console.log(isBusy);
                 return;
             } else {
                 const searchResult = await response.json();
-                console.log(searchResult.users);
                 setSearchResult(searchResult.users);
                 return;
             }

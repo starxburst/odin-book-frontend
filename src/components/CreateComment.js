@@ -13,8 +13,6 @@ const CreateComment = ({ postId, getAllPosts, replaceEditedPost }) => {
         const data = new FormData(e.target);
         const comment = data.get('comment');
         const id = e.target.id;
-        console.log(comment);
-        console.log(id);
 
         try {
             const response = await fetch(`${process.env.REACT_APP_API_URL}/api/posts/${postId}/comment`, {
@@ -34,7 +32,6 @@ const CreateComment = ({ postId, getAllPosts, replaceEditedPost }) => {
             } else {
                 const comment = await response.json();
                 toast.success('Successfully Created Comment!');
-                console.log(comment);
                 replaceEditedPost(postId);
                 e.target.reset();
             }        
